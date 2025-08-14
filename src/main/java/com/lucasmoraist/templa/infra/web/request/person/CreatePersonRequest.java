@@ -1,4 +1,4 @@
-package com.lucasmoraist.templa.infra.web.request;
+package com.lucasmoraist.templa.infra.web.request.person;
 
 import com.lucasmoraist.templa.domain.enums.Roles;
 import jakarta.validation.constraints.Email;
