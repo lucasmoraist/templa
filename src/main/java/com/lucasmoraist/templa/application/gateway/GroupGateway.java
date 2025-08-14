@@ -7,5 +7,6 @@ import java.util.UUID;
 public interface GroupGateway {
 
     Group create(UUID courseId, Group group);
+    Group findById(UUID id);
 
 }

@@ -10,6 +10,9 @@ import com.lucasmoraist.templa.infra.mapper.GroupMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.UUID;
 
 @Log4j2
@@ -36,6 +39,16 @@ public class GroupGatewayImpl implements GroupGateway {
         log.info("Group created successfully: {}", createdGroup);
 
         return createdGroup;
+    }
+
+    @Override
+    public Group findById(UUID id) {
+        return this.groupRepository.findById(id)
+                .map(GroupMapper::toDomain)
+                .orElseThrow(() -> {
+                    log.error("Group not found with id: {}", id);
+                    return new RuntimeException("Group not found");
+                });
     }
 
 }
