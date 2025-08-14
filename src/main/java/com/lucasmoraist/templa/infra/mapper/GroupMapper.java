@@ -51,7 +51,7 @@ public final class GroupMapper {
                 groupEntity.getTime(),
                 groupEntity.getDuration(),
                 groupEntity.getMaxStudents(),
-                groupEntity.getCourse() != null ? CourseMapper.toDomain(groupEntity.getCourse()) : null
+                null
         );
     }
 
@@ -61,9 +61,14 @@ public final class GroupMapper {
                 group.dayOfWeek().getValue(),
                 group.time(),
                 group.duration(),
-                group.maxStudents(),
-                CourseMapper.toResponse(group.course())
+                group.maxStudents()
         );
+    }
+
+    public static List<GroupResponse> toResponseList(List<Group> groups) {
+        return groups.stream()
+                .map(GroupMapper::toResponse)
+                .toList();
     }
 
     private static GroupEntity toEntity(Group group) {
