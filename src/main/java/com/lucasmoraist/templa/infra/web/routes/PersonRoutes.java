@@ -1,7 +1,7 @@
 package com.lucasmoraist.templa.infra.web.routes;
 
 import com.lucasmoraist.templa.infra.web.request.person.CreatePersonRequest;
-import com.lucasmoraist.templa.infra.web.response.PersonResponse;
+import com.lucasmoraist.templa.infra.web.response.person.PersonResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

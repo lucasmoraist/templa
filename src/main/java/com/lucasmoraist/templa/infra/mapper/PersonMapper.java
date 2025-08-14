@@ -2,7 +2,7 @@ package com.lucasmoraist.templa.infra.mapper;
 
 import com.lucasmoraist.templa.domain.model.Person;
 import com.lucasmoraist.templa.infra.db.entity.PersonEntity;
-import com.lucasmoraist.templa.infra.web.response.PersonResponse;
+import com.lucasmoraist.templa.infra.web.response.person.PersonResponse;
 
 public final class PersonMapper {
 

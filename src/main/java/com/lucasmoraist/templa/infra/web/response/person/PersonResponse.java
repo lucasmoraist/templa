@@ -1,4 +1,4 @@
-package com.lucasmoraist.templa.infra.web.response;
+package com.lucasmoraist.templa.infra.web.response.person;
 
 public record PersonResponse(
         String id,
