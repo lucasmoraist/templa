@@ -4,7 +4,7 @@ import com.lucasmoraist.templa.application.usecases.person.SavePersonCase;
 import com.lucasmoraist.templa.domain.model.Person;
 import com.lucasmoraist.templa.domain.model.User;
 import com.lucasmoraist.templa.infra.mapper.PersonMapper;
-import com.lucasmoraist.templa.infra.web.request.CreatePersonRequest;
+import com.lucasmoraist.templa.infra.web.request.person.CreatePersonRequest;
 import com.lucasmoraist.templa.infra.web.response.PersonResponse;
 import com.lucasmoraist.templa.infra.web.routes.PersonRoutes;
 import lombok.RequiredArgsConstructor;
