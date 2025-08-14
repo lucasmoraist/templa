@@ -32,6 +32,8 @@ public class GroupGatewayImpl implements GroupGateway {
         Course course = this.courseGateway.findById(courseId);
         log.debug("Creating group: {} for course: {}", group, course);
 
+        this.checkingConflicts(courseId, group);
+
         GroupEntity entity = GroupMapper.toEntity(group, course);
         this.groupRepository.save(entity);
 
@@ -49,6 +51,25 @@ public class GroupGatewayImpl implements GroupGateway {
                     log.error("Group not found with id: {}", id);
                     return new RuntimeException("Group not found");
                 });
+    }
+
+    private void checkingConflicts(UUID courseId, Group group) {
+        final Duration buffer = Duration.ofHours(1);
+
+        List<GroupEntity> groups = groupRepository.findAllByCourseId(courseId);
+        log.debug("Checking for conflicts in groups for courseId: {}", courseId);
+
+        for (GroupEntity entity : groups) {
+            if (group.dayOfWeek().equals(entity.getDayOfWeek())) {
+                LocalTime existingStart = entity.getStartTime().minus(buffer);
+                LocalTime existingEnd = entity.getEndTime().plus(buffer);
+
+                if (existingStart.isBefore(group.endTime()) && existingEnd.isAfter(group.startTime())) {
+                    log.error("Conflict found with group: {}", entity);
+                    throw new RuntimeException("Group time conflict detected");
+                }
+            }
+        }
     }
 
 }
