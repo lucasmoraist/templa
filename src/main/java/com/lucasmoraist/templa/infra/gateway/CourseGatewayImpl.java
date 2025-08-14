@@ -8,6 +8,8 @@ import com.lucasmoraist.templa.infra.mapper.CourseMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Log4j2
 @Service
 public class CourseGatewayImpl implements CourseGateway {
@@ -27,6 +29,16 @@ public class CourseGatewayImpl implements CourseGateway {
         Course createdCourse = CourseMapper.toDomain(entity);
         log.debug("Course created: {}", createdCourse);
         return createdCourse;
+    }
+
+    @Override
+    public Course findById(UUID id) {
+        return courseRepository.findById(id)
+                .map(CourseMapper::toDomain)
+                .orElseThrow(() -> {
+                    log.error("Course not found with id: {}", id);
+                    return new RuntimeException("Course not found");
+                });
     }
 
 }
