@@ -44,7 +44,8 @@ public final class CourseMapper {
                 course.id().toString(),
                 course.name(),
                 course.description(),
-                course.modality().getDescription()
+                course.modality().getDescription(),
+                GroupMapper.toResponseList(course.groups())
         );
     }
 
