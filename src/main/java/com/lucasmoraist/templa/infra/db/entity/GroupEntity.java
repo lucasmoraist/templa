@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Getter
@@ -29,8 +30,8 @@ public class GroupEntity {
     private UUID id;
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
-    private String time;
-    private String duration;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private int maxStudents;
 
     @ManyToOne

@@ -1,16 +1,17 @@
 package com.lucasmoraist.templa.infra.web.request.group;
 
 import com.lucasmoraist.templa.domain.enums.DayOfWeek;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalTime;
 
 public record GroupRequest(
         @NotNull(message = "Day of week is required")
         DayOfWeek dayOfWeek,
-        @NotBlank(message = "Time is required")
-        String time,
-        @NotBlank(message = "Duration is required")
-        String duration,
+        @NotNull(message = "Time is required")
+        LocalTime startTime,
+        @NotNull(message = "Time is required")
+        LocalTime endTime,
         @NotNull(message = "Max students is required")
         int maxStudents
 ) {
