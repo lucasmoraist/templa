@@ -10,6 +10,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Log4j2
 @Service
 public class PersonGatewayImpl implements PersonGateway {
@@ -33,6 +35,16 @@ public class PersonGatewayImpl implements PersonGateway {
         Person savedPerson = PersonMapper.toDomain(entity);
         log.debug("Saved person: {}", savedPerson);
         return savedPerson;
+    }
+
+    @Override
+    public Person findById(UUID id) {
+        return this.repository.findById(id)
+                .map(PersonMapper::toDomain)
+                .orElseThrow(() -> {
+                    log.error("Person not found with id: {}", id);
+                    return new RuntimeException("Person not found");
+                });
     }
 
 }
