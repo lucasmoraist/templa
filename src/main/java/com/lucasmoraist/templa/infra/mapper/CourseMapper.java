@@ -1,5 +1,6 @@
 package com.lucasmoraist.templa.infra.mapper;
 
+import com.lucasmoraist.templa.domain.enums.Roles;
 import com.lucasmoraist.templa.domain.model.Course;
 import com.lucasmoraist.templa.infra.db.entity.CourseEntity;
 import com.lucasmoraist.templa.infra.web.request.course.CreateCourseRequest;
@@ -39,13 +40,13 @@ public final class CourseMapper {
         );
     }
 
-    public static CourseResponse toResponse(Course course) {
+    public static CourseResponse toResponse(Course course, Roles role) {
         return new CourseResponse(
                 course.id().toString(),
                 course.name(),
                 course.description(),
                 course.modality().getDescription(),
-                GroupMapper.toResponseList(course.groups())
+                Roles.TEACHER.equals(role) ? GroupMapper.toResponseList(course.groups()) : List.of()
         );
     }
 
