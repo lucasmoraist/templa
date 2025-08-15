@@ -23,6 +23,9 @@ public interface TeacherRoutes {
     @Operation(summary = "Register a new teacher", description = "Create a new teacher in the system")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Teacher created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data"),
+            @ApiResponse(responseCode = "409", description = "Email already exists"),
+
     })
     @PostMapping("register")
     ResponseEntity<?> create(@Valid @RequestBody CreateTeacherRequest request);

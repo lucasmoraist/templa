@@ -19,6 +19,7 @@ public interface UserRoutes {
     @Operation(summary = "Login", description = "Authenticate a user and return a token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User authenticated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid login credentials"),
     })
     @PostMapping
     ResponseEntity<Token> login(@Valid @RequestBody LoginRequest request);

@@ -2,6 +2,8 @@ package com.lucasmoraist.templa.infra.web.routes;
 
 import com.lucasmoraist.templa.infra.web.request.course.CreateCourseRequest;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -28,13 +30,19 @@ public interface CourseRoutes {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Course created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data"),
+            @ApiResponse(responseCode = "404", description = "Teacher not found"),
+    })
+    @Parameters(value = {
+            @Parameter(name = "Authorization", description = "Bearer token for authentication", required = true),
+            @Parameter(name = "teacherId", description = "ID of the teacher creating the course", required = true)
     })
     @PostMapping("create/{teacherId}")
-    ResponseEntity<?> createCourse(@RequestHeader("Authorization") String authorization,
-                                                @PathVariable UUID teacherId,
-                                                @Valid @RequestBody CreateCourseRequest request);
+    ResponseEntity<?> createCourse(
+            @RequestHeader("Authorization") String authorization,
+            @PathVariable UUID teacherId,
+            @Valid @RequestBody CreateCourseRequest request);
 
-    @GetMapping("/{id}")
     @Operation(
             summary = "Get course by ID",
             description = "Retrieves a course by its ID.",
@@ -44,6 +52,11 @@ public interface CourseRoutes {
             @ApiResponse(responseCode = "200", description = "Course retrieved successfully"),
             @ApiResponse(responseCode = "404", description = "Course not found")
     })
+    @Parameters(value = {
+            @Parameter(name = "Authorization", description = "Bearer token for authentication", required = true),
+            @Parameter(name = "id", description = "ID of the course to retrieve", required = true)
+    })
+    @GetMapping("/{id}")
     ResponseEntity<?> getCourseById(@RequestHeader("Authorization") String authorization, @PathVariable UUID id);
 
 }

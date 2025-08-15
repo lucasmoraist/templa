@@ -23,6 +23,8 @@ public interface StudentRoutes {
     @Operation(summary = "Register a new student", description = "Create a new student in the system")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Student created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data"),
+            @ApiResponse(responseCode = "409", description = "Email already exists"),
     })
     @PostMapping("register")
     ResponseEntity<?> create(@Valid @RequestBody CreateStudentRequest request);
