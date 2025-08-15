@@ -1,6 +1,12 @@
 spring:
   application:
     name: templa
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      password: password
   datasource:
     url: jdbc:postgresql://localhost:5432/templa
     username: postgres
