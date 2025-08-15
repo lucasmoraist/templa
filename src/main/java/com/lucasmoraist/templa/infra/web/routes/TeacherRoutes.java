@@ -1,7 +1,7 @@
 package com.lucasmoraist.templa.infra.web.routes;
 
-import com.lucasmoraist.templa.infra.web.request.person.CreatePersonRequest;
-import com.lucasmoraist.templa.infra.web.response.person.PersonResponse;
+import com.lucasmoraist.templa.infra.web.request.teacher.CreateTeacherRequest;
+import com.lucasmoraist.templa.infra.web.response.teacher.TeacherResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
 
-@RequestMapping("/api/v1/person")
-@Tag(name = "Person", description = "Person management routes")
-public interface PersonRoutes {
+@RequestMapping("/api/v1/teacher")
+@Tag(name = "Teacher", description = "Teacher management routes")
+public interface TeacherRoutes {
 
-    @Operation(summary = "Register a new person", description = "Create a new person in the system")
+    @Operation(summary = "Register a new teacher", description = "Create a new teacher in the system")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Person created successfully"),
+            @ApiResponse(responseCode = "201", description = "Teacher created successfully"),
     })
     @PostMapping("register")
-    ResponseEntity<PersonResponse> createPerson(@Valid @RequestBody CreatePersonRequest request);
+    ResponseEntity<TeacherResponse> create(@Valid @RequestBody CreateTeacherRequest request);
 
     @Operation(
-            summary = "Register a new person",
-            description = "Create a new person in the system",
+            summary = "Register a new teacher",
+            description = "Create a new teacher in the system",
             security = @SecurityRequirement(name = "bearer")
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Person created successfully"),
-            @ApiResponse(responseCode = "404", description = "Person not found"),
+            @ApiResponse(responseCode = "201", description = "Teacher created successfully"),
+            @ApiResponse(responseCode = "404", description = "Teacher not found"),
     })
     @GetMapping("{id}")
-    ResponseEntity<PersonResponse> getPersonById(@PathVariable UUID id);
+    ResponseEntity<TeacherResponse> getTeacherById(@PathVariable UUID id);
 
 }

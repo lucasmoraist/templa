@@ -1,4 +1,4 @@
-package com.lucasmoraist.templa.infra.web.request.person;
+package com.lucasmoraist.templa.infra.web.request.student;
 
 import com.lucasmoraist.templa.domain.enums.Roles;
 import jakarta.validation.constraints.Email;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record CreatePersonRequest(
+public record CreateStudentRequest(
         @NotBlank(message = "Name is required")
         @Size(min = 3, max = 255, message = "Name is invalid")
         String name,
