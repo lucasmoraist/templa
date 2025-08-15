@@ -4,6 +4,7 @@ import com.lucasmoraist.templa.application.gateway.EnrollmentGateway;
 import com.lucasmoraist.templa.application.gateway.GroupGateway;
 import com.lucasmoraist.templa.application.gateway.StudentGateway;
 import com.lucasmoraist.templa.application.gateway.TokenGateway;
+import com.lucasmoraist.templa.domain.exception.GroupFullException;
 import com.lucasmoraist.templa.domain.model.Group;
 import com.lucasmoraist.templa.domain.model.Student;
 
@@ -27,7 +28,7 @@ public class EnrollCase {
         Group group = groupGateway.findById(groupId);
 
         if (group.studentsEnrolled().size() >= group.maxStudents()) {
-            throw new IllegalStateException("Group is full");
+            throw new GroupFullException();
         }
 
         String token = authorization.replace("Bearer ", "");

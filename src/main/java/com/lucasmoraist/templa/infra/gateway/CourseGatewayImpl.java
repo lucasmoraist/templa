@@ -9,6 +9,7 @@ import com.lucasmoraist.templa.infra.db.entity.TeacherEntity;
 import com.lucasmoraist.templa.infra.db.repository.CourseRepository;
 import com.lucasmoraist.templa.infra.mapper.CourseMapper;
 import com.lucasmoraist.templa.infra.mapper.TeacherMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public class CourseGatewayImpl implements CourseGateway {
                 .map(CourseMapper::toDomain)
                 .orElseThrow(() -> {
                     log.error("Course not found with id: {}", id);
-                    return new RuntimeException("Course not found");
+                    return new EntityNotFoundException("Course not found");
                 });
     }
 

@@ -2,11 +2,13 @@ package com.lucasmoraist.templa.infra.gateway;
 
 import com.lucasmoraist.templa.application.gateway.CourseGateway;
 import com.lucasmoraist.templa.application.gateway.GroupGateway;
+import com.lucasmoraist.templa.domain.exception.ConflictTimesException;
 import com.lucasmoraist.templa.domain.model.Course;
 import com.lucasmoraist.templa.domain.model.Group;
 import com.lucasmoraist.templa.infra.db.entity.GroupEntity;
 import com.lucasmoraist.templa.infra.db.repository.GroupRepository;
 import com.lucasmoraist.templa.infra.mapper.GroupMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +51,7 @@ public class GroupGatewayImpl implements GroupGateway {
                 .map(GroupMapper::toDomain)
                 .orElseThrow(() -> {
                     log.error("Group not found with id: {}", id);
-                    return new RuntimeException("Group not found");
+                    return new EntityNotFoundException("Group not found");
                 });
     }
 
@@ -66,7 +68,7 @@ public class GroupGatewayImpl implements GroupGateway {
 
                 if (existingStart.isBefore(group.endTime()) && existingEnd.isAfter(group.startTime())) {
                     log.error("Conflict found with group: {}", entity);
-                    throw new RuntimeException("Group time conflict detected");
+                    throw new ConflictTimesException("Group time conflict detected");
                 }
             }
         }

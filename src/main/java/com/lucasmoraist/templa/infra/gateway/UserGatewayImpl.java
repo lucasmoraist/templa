@@ -1,6 +1,7 @@
 package com.lucasmoraist.templa.infra.gateway;
 
 import com.lucasmoraist.templa.application.gateway.UserGateway;
+import com.lucasmoraist.templa.domain.exception.CredentialsException;
 import com.lucasmoraist.templa.domain.model.User;
 import com.lucasmoraist.templa.infra.db.entity.UserEntity;
 import com.lucasmoraist.templa.infra.db.repository.UserRepository;
@@ -27,12 +28,12 @@ public class UserGatewayImpl implements UserGateway {
         UserEntity userEntity = this.userRepository.findByEmail(email)
                 .orElseThrow(() -> {
                     log.error("User with email {} not found", email);
-                    return new RuntimeException("Email or password is incorrect");
+                    return new CredentialsException("Email or password is incorrect");
                 });
 
         if (!this.passwordEncoder.matches(password, userEntity.getPassword())) {
             log.error("Password mismatch for user with email: {}", email);
-            throw new RuntimeException("Email or password is incorrect");
+            throw new CredentialsException("Email or password is incorrect");
         }
 
         log.debug("User with email {} verified successfully", email);

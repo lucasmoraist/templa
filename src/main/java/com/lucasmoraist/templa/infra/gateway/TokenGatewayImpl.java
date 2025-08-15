@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.lucasmoraist.templa.application.gateway.TokenGateway;
 import com.lucasmoraist.templa.domain.enums.Roles;
+import com.lucasmoraist.templa.domain.exception.TokenException;
 import com.lucasmoraist.templa.domain.model.Token;
 import com.lucasmoraist.templa.domain.model.User;
 import lombok.extern.log4j.Log4j2;
@@ -45,7 +46,7 @@ public class TokenGatewayImpl implements TokenGateway {
             return new Token(token, expiresIn);
         } catch (JWTCreationException e) {
             log.error("Error generating token", e);
-            throw new RuntimeException("Error generating token", e);
+            throw new TokenException("Error generating token", e);
         }
     }
 
@@ -62,7 +63,7 @@ public class TokenGatewayImpl implements TokenGateway {
             return subject;
         } catch (JWTVerificationException ex) {
             log.error("Invalid or expired token: {}", token, ex);
-            throw new RuntimeException("Invalid or expired token", ex);
+            throw new TokenException("Invalid or expired token", ex);
         }
     }
 
@@ -81,7 +82,7 @@ public class TokenGatewayImpl implements TokenGateway {
             return Roles.valueOf(role);
         } catch (JWTVerificationException ex) {
             log.error("Invalid or expired token: {}", token, ex);
-            throw new RuntimeException("Invalid or expired token", ex);
+            throw new TokenException("Invalid or expired token", ex);
         }
     }
 
@@ -98,7 +99,7 @@ public class TokenGatewayImpl implements TokenGateway {
             return subject;
         } catch (JWTVerificationException ex) {
             log.error("Invalid or expired token: {}", token, ex);
-            throw new RuntimeException("Invalid or expired token", ex);
+            throw new TokenException("Invalid or expired token", ex);
         }
     }
 

@@ -5,6 +5,7 @@ import com.lucasmoraist.templa.domain.model.Student;
 import com.lucasmoraist.templa.infra.db.entity.StudentEntity;
 import com.lucasmoraist.templa.infra.db.repository.StudentRepository;
 import com.lucasmoraist.templa.infra.mapper.StudentMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class StudentGatewayImpl implements StudentGateway {
                 .map(StudentMapper::toDomain)
                 .orElseThrow(() -> {
                     log.error("Student not found with id: {}", id);
-                    return new RuntimeException("Student not found");
+                    return new EntityNotFoundException("Student not found");
                 });
     }
 
@@ -51,7 +52,7 @@ public class StudentGatewayImpl implements StudentGateway {
                 .map(StudentMapper::toDomain)
                 .orElseThrow(() -> {
                     log.error("Student not found with email: {}", email);
-                    return new RuntimeException("Student not found");
+                    return new EntityNotFoundException("Student not found");
                 });
     }
 

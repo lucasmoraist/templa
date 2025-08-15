@@ -5,6 +5,7 @@ import com.lucasmoraist.templa.domain.model.Teacher;
 import com.lucasmoraist.templa.infra.db.entity.TeacherEntity;
 import com.lucasmoraist.templa.infra.db.repository.TeacherRepository;
 import com.lucasmoraist.templa.infra.mapper.TeacherMapper;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,7 +44,7 @@ public class TeacherGatewayImpl implements TeacherGateway {
                 .map(TeacherMapper::toDomain)
                 .orElseThrow(() -> {
                     log.error("Teacher not found with id: {}", id);
-                    return new RuntimeException("Teacher not found");
+                    return new EntityNotFoundException("Teacher not found");
                 });
     }
 
