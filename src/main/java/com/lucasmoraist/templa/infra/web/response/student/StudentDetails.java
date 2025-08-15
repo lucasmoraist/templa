@@ -1,4 +1,4 @@
-package com.lucasmoraist.templa.infra.web.routes;
+package com.lucasmoraist.templa.infra.web.response.student;
 
 import com.lucasmoraist.templa.infra.web.response.enrollment.EnrollmentsStudentDetails;
 

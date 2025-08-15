@@ -9,7 +9,7 @@ import com.lucasmoraist.templa.infra.db.entity.StudentEntity;
 import com.lucasmoraist.templa.infra.web.response.enrollment.EnrollmentsStudentDetails;
 import com.lucasmoraist.templa.infra.web.response.student.StudentGroupResponse;
 import com.lucasmoraist.templa.infra.web.response.student.StudentResponse;
-import com.lucasmoraist.templa.infra.web.routes.StudentDetails;
+import com.lucasmoraist.templa.infra.web.response.student.StudentDetails;
 
 import java.util.List;
 import java.util.Map;
