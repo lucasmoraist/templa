@@ -8,8 +8,4 @@ public record Person(
         User user
 ) {
 
-    public Person withUser(User user) {
-        return new Person(this.id, this.name, user);
-    }
-
 }
