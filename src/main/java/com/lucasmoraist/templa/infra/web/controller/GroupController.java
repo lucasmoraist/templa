@@ -1,6 +1,7 @@
 package com.lucasmoraist.templa.infra.web.controller;
 
 import com.lucasmoraist.templa.application.usecases.group.CreateGroupCase;
+import com.lucasmoraist.templa.application.usecases.group.GetGroupByIdCase;
 import com.lucasmoraist.templa.domain.model.Group;
 import com.lucasmoraist.templa.infra.mapper.GroupMapper;
 import com.lucasmoraist.templa.infra.web.request.group.GroupRequest;
@@ -16,9 +17,11 @@ import java.util.UUID;
 public class GroupController implements GroupRoutes {
 
     private final CreateGroupCase createGroupCase;
+    private final GetGroupByIdCase getGroupByIdCase;
 
-public GroupController(CreateGroupCase createGroupCase) {
+    public GroupController(CreateGroupCase createGroupCase, GetGroupByIdCase getGroupByIdCase) {
         this.createGroupCase = createGroupCase;
+        this.getGroupByIdCase = getGroupByIdCase;
     }
 
     @Override
@@ -27,6 +30,13 @@ public GroupController(CreateGroupCase createGroupCase) {
         GroupResponse response = GroupMapper.toResponse(group);
         URI location = URI.create("/api/v1/group");
         return ResponseEntity.created(location).body(response);
+    }
+
+    @Override
+    public ResponseEntity<GroupResponse> getGroupById(UUID id) {
+        Group group = getGroupByIdCase.execute(id);
+        GroupResponse response = GroupMapper.toResponse(group);
+        return ResponseEntity.ok(response);
     }
 
 }
