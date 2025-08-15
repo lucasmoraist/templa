@@ -5,7 +5,9 @@ import com.lucasmoraist.templa.domain.exception.CredentialsException;
 import com.lucasmoraist.templa.domain.exception.GroupFullException;
 import com.lucasmoraist.templa.domain.exception.TokenException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
@@ -64,6 +66,12 @@ public class RestExceptionHandler {
         log.error("Data validation exception occurred: {}", errors, ex);
 
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class, ConstraintViolationException.class})
+    protected ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        log.error("Data integrity violation exception occurred: {}", ex.getMessage());
+        return ResponseEntity.status(409).body("Email already exists or invalid data provided.");
     }
 
     @ExceptionHandler(Exception.class)
