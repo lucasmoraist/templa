@@ -36,4 +36,7 @@ public interface EnrollmentRoutes {
     @PostMapping("/group/{groupId}")
     ResponseEntity<Void> enroll(@RequestHeader("Authorization") String authorization, @PathVariable UUID groupId);
 
+    @PostMapping("/finalise/{studentId}")
+    ResponseEntity<Void> finalise(@PathVariable UUID studentId);
+
 }
