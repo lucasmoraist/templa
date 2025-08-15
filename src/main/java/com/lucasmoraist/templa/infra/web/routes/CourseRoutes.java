@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
@@ -29,8 +30,9 @@ public interface CourseRoutes {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Course created successfully"),
     })
-    @PostMapping
-    ResponseEntity<CourseResponse> createCourse(@Valid @RequestBody CreateCourseRequest request);
+    @PostMapping("create")
+    ResponseEntity<CourseResponse> createCourse(@RequestHeader("Authorization") String authorization,
+                                                @Valid @RequestBody CreateCourseRequest request);
 
     @GetMapping("/{id}")
     @Operation(
@@ -42,6 +44,6 @@ public interface CourseRoutes {
             @ApiResponse(responseCode = "200", description = "Course retrieved successfully"),
             @ApiResponse(responseCode = "404", description = "Course not found")
     })
-    ResponseEntity<CourseResponse> getCourseById(@PathVariable UUID id);
+    ResponseEntity<CourseResponse> getCourseById(@RequestHeader("Authorization") String authorization, @PathVariable UUID id);
 
 }
