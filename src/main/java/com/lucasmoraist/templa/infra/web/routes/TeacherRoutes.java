@@ -1,8 +1,6 @@
 package com.lucasmoraist.templa.infra.web.routes;
 
 import com.lucasmoraist.templa.infra.web.request.teacher.CreateTeacherRequest;
-import com.lucasmoraist.templa.infra.web.response.teacher.TeacherDetails;
-import com.lucasmoraist.templa.infra.web.response.teacher.TeacherResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -27,7 +25,7 @@ public interface TeacherRoutes {
             @ApiResponse(responseCode = "201", description = "Teacher created successfully"),
     })
     @PostMapping("register")
-    ResponseEntity<TeacherResponse> create(@Valid @RequestBody CreateTeacherRequest request);
+    ResponseEntity<?> create(@Valid @RequestBody CreateTeacherRequest request);
 
     @Operation(
             summary = "Register a new teacher",
@@ -39,6 +37,6 @@ public interface TeacherRoutes {
             @ApiResponse(responseCode = "404", description = "Teacher not found"),
     })
     @GetMapping("{id}")
-    ResponseEntity<TeacherDetails> getTeacherById(@PathVariable UUID id);
+    ResponseEntity<?> getTeacherById(@PathVariable UUID id);
 
 }

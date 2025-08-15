@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -27,18 +29,18 @@ public class StudentController implements StudentRoutes {
     }
 
     @Override
-    public ResponseEntity<StudentResponse> create(CreateStudentRequest request) {
+    public ResponseEntity<?> create(CreateStudentRequest request) {
         User user = new User(null, request.email(), request.password(), request.role());
         Student student = this.registerStudentCase.execute(request.name(), user);
-        StudentResponse response = StudentMapper.toResponse(student);
+        Map<String, Object> response = StudentMapper.toDetails(student);
         URI location = URI.create("/api/v1/student");
         return ResponseEntity.created(location).body(response);
     }
 
     @Override
-    public ResponseEntity<StudentDetails> getStudentById(UUID id) {
+    public ResponseEntity<?> getStudentById(UUID id) {
         Student student = this.getStudentByIdCase.execute(id);
-        StudentDetails response = StudentMapper.toDetails(student);
+        Map<String, Object> response = StudentMapper.toDetails(student);
         return ResponseEntity.ok(response);
     }
 

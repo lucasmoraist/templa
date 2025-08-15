@@ -1,8 +1,6 @@
 package com.lucasmoraist.templa.infra.web.routes;
 
 import com.lucasmoraist.templa.infra.web.request.student.CreateStudentRequest;
-import com.lucasmoraist.templa.infra.web.response.student.StudentDetails;
-import com.lucasmoraist.templa.infra.web.response.student.StudentResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -27,7 +25,7 @@ public interface StudentRoutes {
             @ApiResponse(responseCode = "201", description = "Student created successfully"),
     })
     @PostMapping("register")
-    ResponseEntity<StudentResponse> create(@Valid @RequestBody CreateStudentRequest request);
+    ResponseEntity<?> create(@Valid @RequestBody CreateStudentRequest request);
 
     @Operation(
             summary = "Register a new student",
@@ -39,6 +37,6 @@ public interface StudentRoutes {
             @ApiResponse(responseCode = "404", description = "Student not found"),
     })
     @GetMapping("{id}")
-    ResponseEntity<StudentDetails> getStudentById(@PathVariable UUID id);
+    ResponseEntity<?> getStudentById(@PathVariable UUID id);
 
 }

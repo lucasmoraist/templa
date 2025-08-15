@@ -1,8 +1,6 @@
 package com.lucasmoraist.templa.infra.web.routes;
 
 import com.lucasmoraist.templa.infra.web.request.group.GroupRequest;
-import com.lucasmoraist.templa.infra.web.response.group.GroupDetails;
-import com.lucasmoraist.templa.infra.web.response.group.GroupResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -26,7 +24,7 @@ public interface GroupRoutes {
 
     )
     @PostMapping("/{courseId}")
-    ResponseEntity<GroupResponse> createGroup(@PathVariable UUID courseId, @Valid @RequestBody GroupRequest request);
+    ResponseEntity<?> createGroup(@PathVariable UUID courseId, @Valid @RequestBody GroupRequest request);
 
     @Operation(
             summary = "Get group by ID",
@@ -34,6 +32,6 @@ public interface GroupRoutes {
             security = @SecurityRequirement(name = "bearer")
     )
     @GetMapping("/{id}")
-    ResponseEntity<GroupDetails> getGroupById(@PathVariable UUID id);
+    ResponseEntity<?> getGroupById(@PathVariable UUID id);
 
 }

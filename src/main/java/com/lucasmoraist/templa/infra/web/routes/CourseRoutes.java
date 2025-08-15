@@ -1,7 +1,6 @@
 package com.lucasmoraist.templa.infra.web.routes;
 
 import com.lucasmoraist.templa.infra.web.request.course.CreateCourseRequest;
-import com.lucasmoraist.templa.infra.web.response.course.CourseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,7 +30,7 @@ public interface CourseRoutes {
             @ApiResponse(responseCode = "201", description = "Course created successfully"),
     })
     @PostMapping("create/{teacherId}")
-    ResponseEntity<CourseResponse> createCourse(@RequestHeader("Authorization") String authorization,
+    ResponseEntity<?> createCourse(@RequestHeader("Authorization") String authorization,
                                                 @PathVariable UUID teacherId,
                                                 @Valid @RequestBody CreateCourseRequest request);
 
@@ -45,6 +44,6 @@ public interface CourseRoutes {
             @ApiResponse(responseCode = "200", description = "Course retrieved successfully"),
             @ApiResponse(responseCode = "404", description = "Course not found")
     })
-    ResponseEntity<CourseResponse> getCourseById(@RequestHeader("Authorization") String authorization, @PathVariable UUID id);
+    ResponseEntity<?> getCourseById(@RequestHeader("Authorization") String authorization, @PathVariable UUID id);
 
 }
