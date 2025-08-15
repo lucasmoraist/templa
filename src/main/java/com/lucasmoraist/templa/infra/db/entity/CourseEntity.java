@@ -10,6 +10,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -35,6 +37,11 @@ public class CourseEntity {
     private String description;
     @Enumerated(EnumType.STRING)
     private Modality modality;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    @JsonManagedReference
+    private TeacherEntity teacher;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference

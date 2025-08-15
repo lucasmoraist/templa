@@ -10,6 +10,7 @@ public record Course(
         String name,
         String description,
         Modality modality,
+        Teacher teacher,
         List<Group> groups
 ) {
 

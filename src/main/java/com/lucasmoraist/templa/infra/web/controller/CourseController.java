@@ -29,9 +29,9 @@ public class CourseController implements CourseRoutes {
     }
 
     @Override
-    public ResponseEntity<CourseResponse> createCourse(String authorization, CreateCourseRequest request) {
+    public ResponseEntity<CourseResponse> createCourse(String authorization, UUID teacherId, CreateCourseRequest request) {
         Course course = CourseMapper.toDomain(request);
-        Course savedCourse = saveCourseCase.execute(course);
+        Course savedCourse = saveCourseCase.execute(teacherId, course);
         Roles role = getRoleByTokenCase.execute(authorization);
         CourseResponse response = CourseMapper.toResponse(savedCourse, role);
         URI location = URI.create("/api/v1/course");

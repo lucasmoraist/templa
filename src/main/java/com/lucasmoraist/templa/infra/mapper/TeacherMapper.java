@@ -10,7 +10,8 @@ public final class TeacherMapper {
         return new Teacher(
                 entity.getId(),
                 entity.getName(),
-                UserMapper.toDomain(entity.getUser())
+                UserMapper.toDomain(entity.getUser()),
+                null
         );
     }
 
@@ -18,7 +19,8 @@ public final class TeacherMapper {
         return new TeacherEntity(
                 teacher.id(),
                 teacher.name(),
-                UserMapper.toEntity(teacher.user())
+                UserMapper.toEntity(teacher.user()),
+                null
         );
     }
 

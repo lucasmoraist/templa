@@ -13,7 +13,7 @@ public class RegisterTeacherCase {
     }
 
     public Teacher execute(String name, User user) {
-        Teacher teacher = new Teacher(null, name, user);
+        Teacher teacher = new Teacher(null, name, user, null);
         return teacherGateway.save(teacher);
     }
 

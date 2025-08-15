@@ -30,8 +30,9 @@ public interface CourseRoutes {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Course created successfully"),
     })
-    @PostMapping("create")
+    @PostMapping("create/{teacherId}")
     ResponseEntity<CourseResponse> createCourse(@RequestHeader("Authorization") String authorization,
+                                                @PathVariable UUID teacherId,
                                                 @Valid @RequestBody CreateCourseRequest request);
 
     @GetMapping("/{id}")

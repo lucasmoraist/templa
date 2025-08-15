@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface CourseGateway {
 
-    Course create(Course course);
+    Course create(UUID teacherId, Course course);
     Course findById(UUID id);
 
 }

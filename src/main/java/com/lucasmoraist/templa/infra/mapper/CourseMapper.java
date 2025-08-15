@@ -16,6 +16,7 @@ public final class CourseMapper {
                 entity.getName(),
                 entity.getDescription(),
                 entity.getModality(),
+                TeacherMapper.toDomain(entity.getTeacher()),
                 GroupMapper.toDomainList(entity.getGroups())
         );
     }
@@ -26,6 +27,7 @@ public final class CourseMapper {
                 request.name(),
                 request.description(),
                 request.modality(),
+                null,
                 List.of()
         );
     }
@@ -36,6 +38,7 @@ public final class CourseMapper {
                 course.name(),
                 course.description(),
                 course.modality(),
+                null,
                 GroupMapper.toEntityList(course.groups())
         );
     }
@@ -46,6 +49,7 @@ public final class CourseMapper {
                 course.name(),
                 course.description(),
                 course.modality().getDescription(),
+                TeacherMapper.toResponse(course.teacher()),
                 Roles.TEACHER.equals(role) ? GroupMapper.toResponseList(course.groups()) : List.of()
         );
     }
