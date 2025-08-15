@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
@@ -32,6 +33,6 @@ public interface GroupRoutes {
             security = @SecurityRequirement(name = "bearer")
     )
     @GetMapping("/{id}")
-    ResponseEntity<?> getGroupById(@PathVariable UUID id);
+    ResponseEntity<?> getGroupById(@RequestHeader("Authorization") String authorization, @PathVariable UUID id);
 
 }
