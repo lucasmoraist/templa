@@ -6,15 +6,12 @@ import com.lucasmoraist.templa.domain.model.Student;
 import com.lucasmoraist.templa.domain.model.User;
 import com.lucasmoraist.templa.infra.mapper.StudentMapper;
 import com.lucasmoraist.templa.infra.web.request.student.CreateStudentRequest;
-import com.lucasmoraist.templa.infra.web.response.student.StudentResponse;
-import com.lucasmoraist.templa.infra.web.response.student.StudentDetails;
 import com.lucasmoraist.templa.infra.web.routes.StudentRoutes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 @RestController
