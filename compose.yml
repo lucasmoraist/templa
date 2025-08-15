@@ -14,15 +14,25 @@ services:
     depends_on:
       - db
     ports:
-      - 8081:80
+      - "8081:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: password
     volumes:
       - pgadmin:/var/lib/pgadmin
 
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+
 volumes:
   db:
     driver: local
   pgadmin:
+    driver: local
+  redis:
     driver: local
