@@ -1,27 +1,19 @@
 package com.lucasmoraist.templa.infra.mapper;
 
+import com.lucasmoraist.templa.domain.enums.Roles;
 import com.lucasmoraist.templa.domain.model.Course;
 import com.lucasmoraist.templa.domain.model.Enrollment;
 import com.lucasmoraist.templa.domain.model.Group;
+import com.lucasmoraist.templa.domain.utils.FormatDuration;
 import com.lucasmoraist.templa.infra.db.entity.GroupEntity;
 import com.lucasmoraist.templa.infra.web.request.group.GroupRequest;
-import com.lucasmoraist.templa.infra.web.response.group.GroupDetails;
-import com.lucasmoraist.templa.infra.web.response.group.GroupResponse;
 
+import java.time.Duration;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class GroupMapper {
-
-    public static GroupDetails toDetails(Group group) {
-        return new GroupDetails(
-                group.id().toString(),
-                group.dayOfWeek().getValue(),
-                group.startTime().toString(),
-                group.endTime().toString(),
-                group.maxStudents(),
-                StudentMapper.toStudentGroupResponse(group.studentsEnrolled())
-        );
-    }
 
     public static Group toDomain(GroupRequest request) {
         return new Group(
@@ -79,20 +71,38 @@ public final class GroupMapper {
         );
     }
 
-    public static GroupResponse toResponse(Group group) {
-        return new GroupResponse(
-                group.id().toString(),
-                group.dayOfWeek().getValue(),
-                group.startTime().toString(),
-                group.endTime().toString(),
-                group.maxStudents()
-        );
-    }
+    public static Map<String, Object> toResponse(Group group, Roles role) {
+        Map<String, Object> response = new LinkedHashMap<>();
 
-    public static List<GroupResponse> toResponseList(List<Group> groups) {
-        return groups.stream()
-                .map(GroupMapper::toResponse)
+        response.put("id", group.id());
+        response.put("dayOfWeek", group.dayOfWeek());
+        response.put("startTime", group.startTime());
+        response.put("endTime", group.endTime());
+        response.put("duration", FormatDuration.format(Duration.between(group.startTime(), group.endTime())));
+
+        if (Roles.TEACHER.equals(role)) {
+            response.put("maxStudents", group.maxStudents());
+        }
+
+        List<Map<String, Object>> students = group.studentsEnrolled().stream()
+                .map(it -> {
+                    Map<String, Object> student = new LinkedHashMap<>();
+                    student.put("student_id", it.student().id());
+                    student.put("student_name", it.student().name());
+
+                    Map<String, Object> contact = new LinkedHashMap<>();
+                    contact.put("email", it.student().user().email());
+                    student.put("contact", contact);
+
+                    student.put("role", it.student().user().role().name());
+
+                    return student;
+                })
                 .toList();
+
+        response.put("studentsEnrolled", students);
+
+        return response;
     }
 
     public static GroupEntity toEntity(Group group) {

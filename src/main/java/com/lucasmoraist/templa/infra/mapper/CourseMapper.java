@@ -4,18 +4,12 @@ import com.lucasmoraist.templa.domain.enums.Roles;
 import com.lucasmoraist.templa.domain.model.Course;
 import com.lucasmoraist.templa.infra.db.entity.CourseEntity;
 import com.lucasmoraist.templa.infra.web.request.course.CreateCourseRequest;
-import com.lucasmoraist.templa.infra.web.response.course.CourseTeacherDetails;
-import com.lucasmoraist.templa.infra.web.response.course.CourseResponse;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class CourseMapper {
-
-    public static List<CourseTeacherDetails> toDetailsList(List<Course> courses) {
-        return courses.stream()
-                .map(CourseMapper::toDetails)
-                .toList();
-    }
 
     public static Course toDomain(CourseEntity entity) {
         return new Course(
@@ -62,24 +56,56 @@ public final class CourseMapper {
         );
     }
 
-    public static CourseResponse toResponse(Course course, Roles role) {
-        return new CourseResponse(
-                course.id().toString(),
-                course.name(),
-                course.description(),
-                course.modality().getDescription(),
-                TeacherMapper.toResponse(course.teacher()),
-                Roles.TEACHER.equals(role) ? GroupMapper.toResponseList(course.groups()) : List.of()
-        );
-    }
+    public static Map<String, Object> toResponse(Course course, Roles role) {
+        Map<String, Object> response = new LinkedHashMap<>();
 
-    private static CourseTeacherDetails toDetails(Course course) {
-        return new CourseTeacherDetails(
-                course.id().toString(),
-                course.name(),
-                course.description(),
-                course.modality().getDescription()
-        );
+        response.put("id", course.id());
+        response.put("name", course.name());
+        response.put("description", course.description());
+        response.put("modality", course.modality());
+
+        Map<String, Object> teacher = new LinkedHashMap<>();
+        teacher.put("teacher_id", course.teacher().id());
+        teacher.put("name", course.teacher().name());
+
+        Map<String, Object> contact = new LinkedHashMap<>();
+        contact.put("email", course.teacher().user().email());
+        teacher.put("contact", contact);
+
+        response.put("teacher", teacher);
+
+        if (Roles.TEACHER.equals(role)) {
+            response.put("groups", course.groups().stream()
+                    .map(g -> {
+                        Map<String, Object> group = new LinkedHashMap<>();
+                        group.put("group_id", g.id());
+                        group.put("day_of_week", g.dayOfWeek());
+                        group.put("start_time", g.startTime());
+                        group.put("end_time", g.endTime());
+                        group.put("max_students", g.maxStudents());
+
+                        List<Map<String, Object>> students = g.studentsEnrolled().stream()
+                                .map(s -> {
+                                    Map<String, Object> student = new LinkedHashMap<>();
+                                    student.put("student_id", s.student().id());
+                                    student.put("student_name", s.student().name());
+
+                                    Map<String, Object> studentContact = new LinkedHashMap<>();
+                                    studentContact.put("email", s.student().user().email());
+                                    student.put("contact", studentContact);
+
+                                    return student;
+                                })
+                                .toList();
+
+                        group.put("students_enrolled", students);
+                        return group;
+                    })
+                    .toList()
+            );
+        }
+
+        return response;
     }
 
 }
