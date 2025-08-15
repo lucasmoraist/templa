@@ -85,6 +85,23 @@ public class TokenGatewayImpl implements TokenGateway {
         }
     }
 
+    @Override
+    public String getSubject(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            String subject = JWT.require(algorithm)
+                    .withIssuer("templa")
+                    .build()
+                    .verify(token)
+                    .getSubject();
+            log.debug("Token validated for subject: {}", subject);
+            return subject;
+        } catch (JWTVerificationException ex) {
+            log.error("Invalid or expired token: {}", token, ex);
+            throw new RuntimeException("Invalid or expired token", ex);
+        }
+    }
+
     private Instant generateExpiresAt() {
         return LocalDateTime.now().plusMinutes(expiresIn).toInstant(ZoneOffset.of("-03:00"));
     }

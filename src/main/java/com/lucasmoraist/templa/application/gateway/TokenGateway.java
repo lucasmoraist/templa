@@ -9,5 +9,6 @@ public interface TokenGateway {
     Token generateToken(User user);
     String validateAndGetSubject(String token);
     Roles getRoleFromToken(String token);
+    String getSubject(String token);
 
 }

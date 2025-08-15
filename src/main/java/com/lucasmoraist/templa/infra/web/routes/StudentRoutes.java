@@ -38,6 +38,6 @@ public interface StudentRoutes {
             @ApiResponse(responseCode = "404", description = "Student not found"),
     })
     @GetMapping("{id}")
-    ResponseEntity<StudentResponse> getStudentById(@PathVariable UUID id);
+    ResponseEntity<StudentDetails> getStudentById(@PathVariable UUID id);
 
 }

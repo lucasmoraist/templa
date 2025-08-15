@@ -42,6 +42,6 @@ public class GroupEntity {
     private CourseEntity course;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<EnrollmentEntity> enrollments;
+    private List<EnrollmentEntity> studentsEnrolled;
 
 }

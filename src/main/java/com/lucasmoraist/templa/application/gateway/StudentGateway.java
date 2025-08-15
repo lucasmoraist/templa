@@ -8,5 +8,6 @@ public interface StudentGateway {
 
     Student save(Student student);
     Student findById(UUID id);
+    Student findByEmail(String email);
 
 }

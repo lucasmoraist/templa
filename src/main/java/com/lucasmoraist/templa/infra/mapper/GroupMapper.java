@@ -1,14 +1,27 @@
 package com.lucasmoraist.templa.infra.mapper;
 
 import com.lucasmoraist.templa.domain.model.Course;
+import com.lucasmoraist.templa.domain.model.Enrollment;
 import com.lucasmoraist.templa.domain.model.Group;
 import com.lucasmoraist.templa.infra.db.entity.GroupEntity;
 import com.lucasmoraist.templa.infra.web.request.group.GroupRequest;
+import com.lucasmoraist.templa.infra.web.response.group.GroupDetails;
 import com.lucasmoraist.templa.infra.web.response.group.GroupResponse;
 
 import java.util.List;
 
 public final class GroupMapper {
+
+    public static GroupDetails toDetails(Group group) {
+        return new GroupDetails(
+                group.id().toString(),
+                group.dayOfWeek().getValue(),
+                group.startTime().toString(),
+                group.endTime().toString(),
+                group.maxStudents(),
+                StudentMapper.toStudentGroupResponse(group.studentsEnrolled())
+        );
+    }
 
     public static Group toDomain(GroupRequest request) {
         return new Group(
@@ -54,7 +67,15 @@ public final class GroupMapper {
                 groupEntity.getEndTime(),
                 groupEntity.getMaxStudents(),
                 null,
-                List.of()
+                groupEntity.getStudentsEnrolled()
+                        .stream()
+                        .map(it -> new Enrollment(
+                                it.getId(),
+                                StudentMapper.toDomain(it.getStudent()),
+                                null,
+                                it.getEnrollmentDate()
+                        ))
+                        .toList()
         );
     }
 
@@ -74,7 +95,7 @@ public final class GroupMapper {
                 .toList();
     }
 
-    private static GroupEntity toEntity(Group group) {
+    public static GroupEntity toEntity(Group group) {
         return new GroupEntity(
                 group.id(),
                 group.dayOfWeek(),

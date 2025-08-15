@@ -5,6 +5,7 @@ import com.lucasmoraist.templa.application.usecases.group.GetGroupByIdCase;
 import com.lucasmoraist.templa.domain.model.Group;
 import com.lucasmoraist.templa.infra.mapper.GroupMapper;
 import com.lucasmoraist.templa.infra.web.request.group.GroupRequest;
+import com.lucasmoraist.templa.infra.web.response.group.GroupDetails;
 import com.lucasmoraist.templa.infra.web.response.group.GroupResponse;
 import com.lucasmoraist.templa.infra.web.routes.GroupRoutes;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,9 @@ public class GroupController implements GroupRoutes {
     }
 
     @Override
-    public ResponseEntity<GroupResponse> getGroupById(UUID id) {
+    public ResponseEntity<GroupDetails> getGroupById(UUID id) {
         Group group = getGroupByIdCase.execute(id);
-        GroupResponse response = GroupMapper.toResponse(group);
+        GroupDetails response = GroupMapper.toDetails(group);
         return ResponseEntity.ok(response);
     }
 

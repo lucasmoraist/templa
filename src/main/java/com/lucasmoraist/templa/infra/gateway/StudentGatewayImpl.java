@@ -45,4 +45,14 @@ public class StudentGatewayImpl implements StudentGateway {
                 });
     }
 
+    @Override
+    public Student findByEmail(String email) {
+        return this.repository.findByUserEmail(email)
+                .map(StudentMapper::toDomain)
+                .orElseThrow(() -> {
+                    log.error("Student not found with email: {}", email);
+                    return new RuntimeException("Student not found");
+                });
+    }
+
 }
