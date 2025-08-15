@@ -1,6 +1,6 @@
 package com.lucasmoraist.templa.application.usecases.enrollment;
 
-import com.lucasmoraist.templa.application.gateway.EnrollmentGateway;
+import com.lucasmoraist.templa.application.gateway.CacheGateway;
 import com.lucasmoraist.templa.application.gateway.GroupGateway;
 import com.lucasmoraist.templa.application.gateway.StudentGateway;
 import com.lucasmoraist.templa.application.gateway.TokenGateway;
@@ -8,22 +8,24 @@ import com.lucasmoraist.templa.domain.exception.GroupFullException;
 import com.lucasmoraist.templa.domain.model.Group;
 import com.lucasmoraist.templa.domain.model.Student;
 
+import java.util.Map;
 import java.util.UUID;
 
-public class EnrollCase {
+public class RegisterEnrollmentCase {
 
-    private final EnrollmentGateway enrollmentGateway;
     private final GroupGateway groupGateway;
     private final StudentGateway studentGateway;
     private final TokenGateway tokenGateway;
+    private final CacheGateway cacheGateway;
 
-    public EnrollCase(EnrollmentGateway enrollmentGateway, GroupGateway groupGateway, StudentGateway studentGateway, TokenGateway tokenGateway) {
-        this.enrollmentGateway = enrollmentGateway;
+    public RegisterEnrollmentCase(GroupGateway groupGateway, StudentGateway studentGateway, TokenGateway tokenGateway, CacheGateway cacheGateway) {
         this.groupGateway = groupGateway;
         this.studentGateway = studentGateway;
         this.tokenGateway = tokenGateway;
+        this.cacheGateway = cacheGateway;
     }
 
+    // TODO: Quando a pessoa efetuar a inscrição será enviado um e-mail com o link para completar a inscrição
     public void execute(UUID groupId, String authorization) {
         Group group = groupGateway.findById(groupId);
 
@@ -36,7 +38,11 @@ public class EnrollCase {
 
         Student student = studentGateway.findByEmail(email);
 
-        this.enrollmentGateway.enroll(group, student);
+        cacheGateway.save(student.id().toString(), Map.of(
+                "groupId", group.id(),
+                "studentId", student.id()
+        ));
+
     }
 
 }
