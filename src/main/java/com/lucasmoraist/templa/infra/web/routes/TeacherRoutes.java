@@ -1,6 +1,7 @@
 package com.lucasmoraist.templa.infra.web.routes;
 
 import com.lucasmoraist.templa.infra.web.request.teacher.CreateTeacherRequest;
+import com.lucasmoraist.templa.infra.web.response.teacher.TeacherDetails;
 import com.lucasmoraist.templa.infra.web.response.teacher.TeacherResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -38,6 +39,6 @@ public interface TeacherRoutes {
             @ApiResponse(responseCode = "404", description = "Teacher not found"),
     })
     @GetMapping("{id}")
-    ResponseEntity<TeacherResponse> getTeacherById(@PathVariable UUID id);
+    ResponseEntity<TeacherDetails> getTeacherById(@PathVariable UUID id);
 
 }

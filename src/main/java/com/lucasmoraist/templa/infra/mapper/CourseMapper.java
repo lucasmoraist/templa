@@ -4,11 +4,18 @@ import com.lucasmoraist.templa.domain.enums.Roles;
 import com.lucasmoraist.templa.domain.model.Course;
 import com.lucasmoraist.templa.infra.db.entity.CourseEntity;
 import com.lucasmoraist.templa.infra.web.request.course.CreateCourseRequest;
+import com.lucasmoraist.templa.infra.web.response.course.CourseTeacherDetails;
 import com.lucasmoraist.templa.infra.web.response.course.CourseResponse;
 
 import java.util.List;
 
 public final class CourseMapper {
+
+    public static List<CourseTeacherDetails> toDetailsList(List<Course> courses) {
+        return courses.stream()
+                .map(CourseMapper::toDetails)
+                .toList();
+    }
 
     public static Course toDomain(CourseEntity entity) {
         return new Course(
@@ -32,6 +39,18 @@ public final class CourseMapper {
         );
     }
 
+    public static List<Course> toDomainList(List<CourseEntity> courses) {
+        return courses.stream()
+                .map(it -> new Course(
+                        it.getId(),
+                        it.getName(),
+                        it.getDescription(),
+                        it.getModality(),
+                        null,
+                        GroupMapper.toDomainList(it.getGroups())
+                )).toList();
+    }
+
     public static CourseEntity toEntity(Course course) {
         return new CourseEntity(
                 course.id(),
@@ -51,6 +70,15 @@ public final class CourseMapper {
                 course.modality().getDescription(),
                 TeacherMapper.toResponse(course.teacher()),
                 Roles.TEACHER.equals(role) ? GroupMapper.toResponseList(course.groups()) : List.of()
+        );
+    }
+
+    private static CourseTeacherDetails toDetails(Course course) {
+        return new CourseTeacherDetails(
+                course.id().toString(),
+                course.name(),
+                course.description(),
+                course.modality().getDescription()
         );
     }
 

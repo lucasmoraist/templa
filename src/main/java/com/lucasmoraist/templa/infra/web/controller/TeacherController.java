@@ -6,6 +6,7 @@ import com.lucasmoraist.templa.domain.model.Teacher;
 import com.lucasmoraist.templa.domain.model.User;
 import com.lucasmoraist.templa.infra.mapper.TeacherMapper;
 import com.lucasmoraist.templa.infra.web.request.teacher.CreateTeacherRequest;
+import com.lucasmoraist.templa.infra.web.response.teacher.TeacherDetails;
 import com.lucasmoraist.templa.infra.web.response.teacher.TeacherResponse;
 import com.lucasmoraist.templa.infra.web.routes.TeacherRoutes;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +36,9 @@ public class TeacherController implements TeacherRoutes {
     }
 
     @Override
-    public ResponseEntity<TeacherResponse> getTeacherById(UUID id) {
+    public ResponseEntity<TeacherDetails> getTeacherById(UUID id) {
         Teacher teacher = this.getTeacherByIdCase.execute(id);
-        TeacherResponse response = TeacherMapper.toResponse(teacher);
+        TeacherDetails response = TeacherMapper.toDetails(teacher);
         return ResponseEntity.ok(response);
     }
 

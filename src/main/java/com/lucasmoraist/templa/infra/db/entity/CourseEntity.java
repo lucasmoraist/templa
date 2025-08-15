@@ -1,5 +1,6 @@
 package com.lucasmoraist.templa.infra.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lucasmoraist.templa.domain.enums.Modality;
 import jakarta.persistence.CascadeType;
@@ -40,7 +41,7 @@ public class CourseEntity {
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
-    @JsonManagedReference
+    @JsonBackReference
     private TeacherEntity teacher;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)

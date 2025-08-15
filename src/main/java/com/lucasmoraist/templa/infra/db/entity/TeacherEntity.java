@@ -1,5 +1,6 @@
 package com.lucasmoraist.templa.infra.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +36,7 @@ public class TeacherEntity {
     private UserEntity user;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<CourseEntity> courses;
 
 }
