@@ -19,11 +19,12 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "t_person")
-@Table(name = "t_person")
-public class PersonEntity {
+@Entity(name = "t_student")
+@Table(name = "t_student")
+public class StudentEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
 
