@@ -17,7 +17,8 @@ public final class GroupMapper {
                 request.startTime(),
                 request.endTime(),
                 request.maxStudents(),
-                null // Course will be set later when mapping to entity
+                null, // Course will be set later when mapping to entity,
+                List.of()
         );
     }
 
@@ -34,7 +35,8 @@ public final class GroupMapper {
                 group.startTime(),
                 group.endTime(),
                 group.maxStudents(),
-                CourseMapper.toEntity(course)
+                CourseMapper.toEntity(course),
+                List.of()
         );
     }
 
@@ -51,7 +53,8 @@ public final class GroupMapper {
                 groupEntity.getStartTime(),
                 groupEntity.getEndTime(),
                 groupEntity.getMaxStudents(),
-                null
+                null,
+                List.of()
         );
     }
 
@@ -78,7 +81,8 @@ public final class GroupMapper {
                 group.startTime(),
                 group.endTime(),
                 group.maxStudents(),
-                null
+                null,
+                List.of()
         );
     }
 

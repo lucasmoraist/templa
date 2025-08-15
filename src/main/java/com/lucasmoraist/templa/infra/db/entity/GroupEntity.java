@@ -2,6 +2,7 @@ package com.lucasmoraist.templa.infra.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.lucasmoraist.templa.domain.enums.DayOfWeek;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -37,5 +40,8 @@ public class GroupEntity {
     @ManyToOne
     @JsonBackReference
     private CourseEntity course;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<EnrollmentEntity> enrollments;
 
 }
