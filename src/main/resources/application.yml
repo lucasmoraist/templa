@@ -21,4 +21,10 @@ spring:
     jwt:
       secret: secret
       expires-in: 360
-      
+
+secrets:
+  stripe:
+    secret-key: ${STRIPE_SECRET_KEY}
+    success-url: ${SUCCESS_URL_CALLBACK:http://localhost:8080/api/v1/enrollment/finalise/}
+    cancel-url: ${CANCEL_URL_CALLBACK:http://localhost:8080/api/v1/enrollment/cancel/}
+    expires-at: 6
