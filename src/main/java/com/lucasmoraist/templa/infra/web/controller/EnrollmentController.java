@@ -6,6 +6,7 @@ import com.lucasmoraist.templa.infra.web.routes.EnrollmentRoutes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -21,8 +22,9 @@ public class EnrollmentController implements EnrollmentRoutes {
 
     @Override
     public ResponseEntity<Void> enroll(String authorization, UUID groupId) {
-        this.registerEnrollmentCase.execute(groupId, authorization);
-        return ResponseEntity.noContent().build();
+        String url = this.registerEnrollmentCase.execute(groupId, authorization);
+        URI location = URI.create(url);
+        return ResponseEntity.created(location).build();
     }
 
     @Override
