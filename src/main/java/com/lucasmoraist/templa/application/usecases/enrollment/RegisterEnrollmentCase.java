@@ -1,6 +1,7 @@
 package com.lucasmoraist.templa.application.usecases.enrollment;
 
 import com.lucasmoraist.templa.application.gateway.CacheGateway;
+import com.lucasmoraist.templa.application.gateway.EnrollmentGateway;
 import com.lucasmoraist.templa.application.gateway.GroupGateway;
 import com.lucasmoraist.templa.application.gateway.StudentGateway;
 import com.lucasmoraist.templa.application.gateway.TokenGateway;
@@ -17,16 +18,17 @@ public class RegisterEnrollmentCase {
     private final StudentGateway studentGateway;
     private final TokenGateway tokenGateway;
     private final CacheGateway cacheGateway;
+    private final EnrollmentGateway enrollmentGateway;
 
-    public RegisterEnrollmentCase(GroupGateway groupGateway, StudentGateway studentGateway, TokenGateway tokenGateway, CacheGateway cacheGateway) {
+    public RegisterEnrollmentCase(GroupGateway groupGateway, StudentGateway studentGateway, TokenGateway tokenGateway, CacheGateway cacheGateway, EnrollmentGateway enrollmentGateway) {
         this.groupGateway = groupGateway;
         this.studentGateway = studentGateway;
         this.tokenGateway = tokenGateway;
         this.cacheGateway = cacheGateway;
+        this.enrollmentGateway = enrollmentGateway;
     }
 
-    // TODO: Quando a pessoa efetuar a inscrição será enviado um e-mail com o link para completar a inscrição
-    public void execute(UUID groupId, String authorization) {
+    public String execute(UUID groupId, String authorization) {
         Group group = groupGateway.findById(groupId);
 
         if (group.studentsEnrolled().size() >= group.maxStudents()) {
@@ -38,11 +40,14 @@ public class RegisterEnrollmentCase {
 
         Student student = studentGateway.findByEmail(email);
 
+        String stripeUrl = enrollmentGateway.registerEnrollment(student.id(), group);
+
         cacheGateway.save(student.id().toString(), Map.of(
                 "groupId", group.id(),
                 "studentId", student.id()
         ));
 
+        return stripeUrl;
     }
 
 }

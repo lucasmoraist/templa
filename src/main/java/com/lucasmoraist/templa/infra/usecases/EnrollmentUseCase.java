@@ -18,9 +18,10 @@ public class EnrollmentUseCase {
             GroupGateway groupGateway,
             StudentGateway studentGateway,
             TokenGateway tokenGateway,
-            CacheGateway cacheGateway
+            CacheGateway cacheGateway,
+            EnrollmentGateway enrollmentGateway
     ) {
-        return new RegisterEnrollmentCase(groupGateway, studentGateway, tokenGateway, cacheGateway);
+        return new RegisterEnrollmentCase(groupGateway, studentGateway, tokenGateway, cacheGateway, enrollmentGateway);
     }
 
     @Bean
