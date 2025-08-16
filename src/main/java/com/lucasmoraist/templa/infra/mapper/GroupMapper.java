@@ -58,7 +58,14 @@ public final class GroupMapper {
                 groupEntity.getStartTime(),
                 groupEntity.getEndTime(),
                 groupEntity.getMaxStudents(),
-                null,
+                new Course(
+                        groupEntity.getCourse().getId(),
+                        groupEntity.getCourse().getName(),
+                        groupEntity.getCourse().getDescription(),
+                        groupEntity.getCourse().getModality(),
+                        null,
+                        null
+                ),
                 groupEntity.getStudentsEnrolled()
                         .stream()
                         .map(it -> new Enrollment(
