@@ -31,7 +31,7 @@ public class CompleteRegistrationCase {
         Student student = studentGateway.findById(enrollUserDTO.studentId());
 
         // TODO: Aqui terá um web socket para saber que a pessoa completou o pagamento
-        this.enrollmentGateway.enroll(group, student);
+        this.enrollmentGateway.completeRegistration(group, student);
         this.cacheGateway.delete(studentId.toString());
     }
 
